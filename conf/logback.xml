@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<configuration scan="true" scanPeriod="1 minutes">
+	<property name="CONSOLE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%-15.15thread] %-5level %-20logger{20} %-20(> %method:%line) - %msg%n" />
+	<property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%-15.15thread] %-5level %-20logger{20} %-20(> %method:%line) - %msg%n" />
+	<property name="FILE_PATH" value="${user.dir}/logs" />
+
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="FILE-THREAD" class="ch.qos.logback.classic.sift.SiftingAppender">
+		<discriminator>
+			<key>logFileName</key>
+			<defaultValue>Worker</defaultValue>
+		</discriminator>
+	
+		<sift>
+			<appender name="FILE-${logFileName}" class="ch.qos.logback.core.rolling.RollingFileAppender">
+				<file>${FILE_PATH}/${logFileName}.log</file>
+				<encoder>
+					<pattern>${FILE_LOG_PATTERN}</pattern>
+				</encoder>
+				<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+					<fileNamePattern>${FILE_PATH}/%d{yyyy-MM-dd}</fileNamePattern>
+					<maxHistory>30</maxHistory>
+				</rollingPolicy>
+			</appender>
+		</sift>
+	</appender>
+	
+	<!-- DBMS Logger -->
+	<logger name="jdbc" level="OFF" />
+	<logger name="jdbc.sqlonly" level="INFO" additivity="false">
+		<appender-ref ref="CONSOLE" />
+	</logger>
+	<logger name="jdbc.sqltiming" level="DEBUG" additivity="false">
+		<appender-ref ref="CONSOLE" />
+	</logger>
+	<logger name="jdbc.resultsettable" level="INFO" additivity="false">
+		<appender-ref ref="CONSOLE" />
+	</logger>
+	
+	<!-- Package Logger -->
+	<logger name="com.withsw" level="DEBUG" additivity="false">
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE-THREAD" />
+	</logger>
+		
+	<root level="ERROR">
+		<appender-ref ref="FILE-THREAD" />
+	</root>
+</configuration>
