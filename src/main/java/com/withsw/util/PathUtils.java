@@ -1,10 +1,23 @@
 package com.withsw.util;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.InvalidParameterException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class PathUtils {
+	public static String currentDir() {
+		String dir = "";
+		
+		Path path = Paths.get("");
+		if(path != null) {
+			dir = path.toAbsolutePath().toString();	
+		}
+		
+		return dir;
+	}
+	
 	public static String tillToday(String baseDir) {
 		if(baseDir == null || "".equals(baseDir)) {
 			throw new InvalidParameterException("baseDir is null or empty");

@@ -8,6 +8,14 @@
 
 plugins {
     id 'java-library'
+    id 'eclipse'
+}
+
+eclipse {
+	classpath {
+		downloadSources = true
+		downloadJavadoc = true
+	}
 }
 
 def appName = 'MyDaemonServer'
@@ -20,6 +28,7 @@ ext {
 	logbackVersion = '1.2.5'
 	slf4jApiVersion = '1.7.32'
 	janinoVersion = '3.1.6'
+	snmp4jVersion = '2.8.1'
 }
 
 repositories {
@@ -44,6 +53,9 @@ dependencies {
 	compile "ch.qos.logback:logback-core:${logbackVersion}"
 	compile "org.slf4j:slf4j-api:${slf4jApiVersion}" 
 	compile "org.codehaus.janino:janino:${janinoVersion}"
+	
+	// SNMP
+	implementation "org.snmp4j:snmp4j:${snmp4jVersion}"
 }
 
 jar {
