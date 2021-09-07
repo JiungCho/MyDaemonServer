@@ -29,6 +29,9 @@ ext {
 	slf4jApiVersion = '1.7.32'
 	janinoVersion = '3.1.6'
 	snmp4jVersion = '2.8.1'
+	hibernateVersion = '5.4.21.Final'
+	mariadbJavaClientVersion = '2.6.2'
+	lombokVersion = '1.18.12'
 }
 
 repositories {
@@ -56,6 +59,25 @@ dependencies {
 	
 	// SNMP
 	implementation "org.snmp4j:snmp4j:${snmp4jVersion}"
+	
+	// Database
+	// Hibernate Core
+	implementation "org.hibernate:hibernate-core:${hibernateVersion}"
+	
+	// Database Connection Pool
+	implementation "org.hibernate:hibernate-c3p0:${hibernateVersion}"
+	
+	// Hibernate Java8 plugin - Java8과 관련된 기능 사용
+	implementation "org.hibernate:hibernate-java8:${hibernateVersion}"
+	
+	// MariaDB Connector
+	implementation "org.mariadb.jdbc:mariadb-java-client:${mariadbJavaClientVersion}"
+
+	// Lombok
+	compileOnly "org.projectlombok:lombok:${lombokVersion}"
+	annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+	testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+	testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"	
 }
 
 jar {
