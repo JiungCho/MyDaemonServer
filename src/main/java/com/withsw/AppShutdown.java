@@ -8,14 +8,19 @@ public class AppShutdown extends Thread {
 
 	Logger logger = LoggerFactory.getLogger(AppShutdown.class);
 	
-	public AppShutdown() {
-		this.setName("main_end");
+	App app;
+	
+	public AppShutdown(App app) {
+		this.app = app;
 	}
 	
 	@Override
 	public void run() {
+		logger.info("Shutdown...");
 		
-		endMsg();
+		if(app != null) {
+			app.shutdown();			
+		}
 	}
 	
 	public void endMsg() {
